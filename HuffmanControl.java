@@ -1,6 +1,7 @@
 import java.util.PriorityQueue;
 
 public class HuffmanControl {
+  private int charCounter;
   public HuffmanTree buildHuffmanTree(int[] freqCounter) {
     /*
      * Antes de tudo, é necessária uma fila de prioridade que ordenará as
@@ -36,6 +37,23 @@ public class HuffmanControl {
     return trees.poll();
   }
 
+  /*
+   * O metodo fillFreq cria um vetor de frequencias (com quantidade de caracteres
+   * máxima) e percorre um dado texto,
+   * atribuindo ao
+   * vetor a ocorrência de cada simbolo
+   * Ex: a palavra "teste" possui 2 ocorrências do simbolo "t", que representa um
+   * total de 2/5 da palavra (frequencia em porcentagem)
+   */
+
+  public int[] fillFreq(int size, String text) {
+    int[] freqCounter = new int[size];
+    for (char c : text.toCharArray()) {
+      freqCounter[c]++;
+    }
+    return freqCounter;
+  }
+
   /* Metodo que converte uma string de texto para codigo binario */
   public String textToBinary(HuffmanTree tree, String text) {
     // Caso a arvore recebida como parâmetro exista
@@ -43,6 +61,7 @@ public class HuffmanControl {
       String binaryText = "";
       for (char c : text.toCharArray()) {
         binaryText = binaryText + (getBinary(tree, new StringBuffer(), c));
+        charCounter++;
       }
       return binaryText;
     }
@@ -126,9 +145,11 @@ public class HuffmanControl {
         // Caso seja igual a 0, é no lado esquerdo
         if (c == '0') {
           if (node.left instanceof HuffmanLeaf) {
-            charText = charText + ((HuffmanLeaf) node.left).symbol; // A string de texto recebe o simbolo da folha da esquerda
+            charText = charText + ((HuffmanLeaf) node.left).symbol; // A string de texto recebe o simbolo da folha da
+                                                                    // esquerda
             node = (HuffmanNode) tree;
-            // O nó agora volta a ser a raíz, o nó que equivale a soma de todos os outros nós
+            // O nó agora volta a ser a raíz, o nó que equivale a soma de todos os outros
+            // nós
           } else {
             /*
              * Caso o nó não seja uma instância de uma folha, continuará percorrendo o lado
@@ -138,10 +159,12 @@ public class HuffmanControl {
           }
         } else if (c == '1') {
           if (node.right instanceof HuffmanLeaf) {
-            charText = charText + ((HuffmanLeaf) node.right).symbol; // A string de texto recebe o simbolo da folha da direita
+            charText = charText + ((HuffmanLeaf) node.right).symbol; // A string de texto recebe o simbolo da folha da
+                                                                     // direita
             node = (HuffmanNode) tree;
-            // O nó agora volta a ser a raíz, o nó que equivale a soma de todos os outros nós
-          } else{
+            // O nó agora volta a ser a raíz, o nó que equivale a soma de todos os outros
+            // nós
+          } else {
             /*
              * Caso o nó não seja uma instância de uma folha, continuará percorrendo o lado
              * direito
@@ -154,5 +177,7 @@ public class HuffmanControl {
     }
     return null;
   }
-
+public int getCharCounter() {
+    return charCounter;
+}
 }

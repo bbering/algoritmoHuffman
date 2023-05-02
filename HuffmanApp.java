@@ -10,30 +10,16 @@ public class HuffmanApp {
     String text;
     System.out.println("Forneça uma palavra para ser comprimida");
     text = scan.next();
-
-    /*
-     * Criado um array de elementos, com o tamanho maximo fixado em 300, ou seja,
-     * a palavra pode possuir até 300 caracteres diferentes
-     */
-    int[] freqCounter = new int[300];
-
-    /*
-     * Percorre um dado texto e atribui a um vetor de frequencias a ocorrencia de
-     * cada simbolo
-     * Ex: a palavra "teste" possui 2 ocorrências do simbolo "t", que representa um
-     * total de 2/5 da palavra (frequencia em porcentagem)
-     */
-    for (char c : text.toCharArray()) {
-      freqCounter[c]++;
-    }
+    int arraySize = 300;
 
     /* Momento de criar a árvore de Huffman */
-    HuffmanTree tree = control.buildHuffmanTree(freqCounter);
-    control.buildHuffmanTree(freqCounter);
+    HuffmanTree tree = control.buildHuffmanTree(control.fillFreq(arraySize, text));
+    control.buildHuffmanTree(control.fillFreq(arraySize, text));
 
     /* Metodo que codificará a palavra */
     System.out.println("Texto codificado: ");
     System.out.println(control.textToBinary(tree, text));
+    System.out.println("Numero de caracteres: " + control.getCharCounter());
 
     /*
      * Printando as refêrencias usadas para codificar o texto usando o código de
